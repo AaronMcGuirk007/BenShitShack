@@ -41,6 +41,9 @@ public class Tank extends Sprite {
     // Tank Color (0 = Green , 1 = Red)
     private int tankColor;
 
+    private int lastPosX;
+    private int lastPosY;;
+
     // Current Tank Pic
     private String currP;
 
@@ -86,9 +89,8 @@ public class Tank extends Sprite {
     }
 
     public void paint(Graphics g) {
-
         if (done) {
-            g.drawImage(explosion, (int) upperLeftX, (int) upperLeftY - 15, null);
+            g.drawImage(explosion, (int) lastPosX, (int) lastPosY - 15, null);
             //g.drawImage(crater, (int) upperLeftX, (int) upperLeftY - 15, null);
         } else {
             g.drawImage(image, (int) upperLeftX, (int) upperLeftY, null);
@@ -192,6 +194,8 @@ public class Tank extends Sprite {
 
     public void destroyTank() {
         done = true;
+        lastPosX = (int) upperLeftX;
+        lastPosY = (int ) upperLeftY;
         container.repaint();
     }
 

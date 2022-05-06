@@ -7,13 +7,14 @@ import java.awt.Graphics;
 /**
  * Description of game class _____.
  * 
- * @author Aaron McGuirk, Ethan Bartlett, Jason Macutek, Adam Leonard, Ben McColgen
+ * @author Aaron McGuirk, Ethan Bartlett, Jason Macutek, Adam Leonard, Ben
+ *         McColgen
  * @version Spring 2022
  */
 
 public class Game extends SpriteController implements KeyListener {
 
-	//Delay for the animations
+	// Delay for the animations
 	public static final int DELAY_TIME = 33;
 
 	// list of Sprites
@@ -22,7 +23,7 @@ public class Game extends SpriteController implements KeyListener {
 	private java.util.List<Tank> tanks;
 
 	private ArrayList<Bullet> bullets = new ArrayList<>();
-    private ArrayList<Target> targets = new ArrayList<>();
+	private ArrayList<Target> targets = new ArrayList<>();
 
 	private int curr, curr2;
 
@@ -30,101 +31,100 @@ public class Game extends SpriteController implements KeyListener {
 	private Player p1, p2;
 	private JLabel playerOne, playerTwo, p1HealthBar, p2HealthBar;
 
-	//The tanks
+	// The tanks
 	public Tank tank1;
 	public Tank tank2;
 
-	//Terrain
+	// Terrain
 
-	//The targets
-	//private Target target1;
+	// The targets
+	// private Target target1;
 
-    //the container of the game
+	// the container of the game
 	public JPanel container;
 
-
-    //list of booleans to track keyPresses
-    boolean[] keys = new boolean[255];
+	// list of booleans to track keyPresses
+	boolean[] keys = new boolean[255];
 
 	// an object to serve as the lock for thread safety of our list access
 	private Object lock = new Object();
 
-
-	public Game(){
+	public Game() {
 
 		super("Tanks", 1000, 1000);
-		
+
 	}
+
 	/*
-
-
-	/**
-     * Draw the Tanks and targets
-     * 
-     * @param g the Graphics object in which to draw
-     */
-    @Override
-    protected void paint(Graphics g) {
+	 * 
+	 * 
+	 * /**
+	 * Draw the Tanks and targets
+	 * 
+	 * @param g the Graphics object in which to draw
+	 */
+	@Override
+	protected void paint(Graphics g) {
 		
-        tank1.paint(g);
+		tank1.paint(g);
 		tank2.paint(g);
 		updateHealth();
-        //terrain.paint(g);
+		// terrain.paint(g);
 
 		int j = 0;
-        while (j < targets.size()) {
-            Target t = targets.get(j);
-            if (t.done()) {
-                t.paint(g);
-                targets.remove(j);
+		while (j < targets.size()) {
+			Target t = targets.get(j);
+			if (t.done()) {
+				t.paint(g);
+				targets.remove(j);
 				updateScore();
-            } else {
-                t.paint(g);
-                j++;
-            }
-        }
+			} else {
+				t.paint(g);
+				j++;
+			}
+		}
 
-        // Paints and removes the bullets
-        int i = 0;
-        while (i < bullets.size()) {
-            Bullet b = bullets.get(i);
-            if (b.done()) {
-                b.stop();
-                bullets.remove(i);
-            } else {
-                b.paint(g);
-                i++;
-            }
-        }
-    }
-
-	/**
-     * Add the mouse listeners to the panel. Here, we need methods
-     * from both MouseListener, as the MouseMotionListener will be
-     * the BreakoutPaddle.
-     * 
-     * @param p the JPanel to which the mouse listeners will be
-     *          attached
-     */
-    @Override
-    protected void addListeners(JPanel panel) {
-		
-       	panel.addKeyListener(this);
-    }
+		// Paints and removes the bullets
+		int i = 0;
+		while (i < bullets.size()) {
+			Bullet b = bullets.get(i);
+			if (b.done()) {
+				b.stop();
+				bullets.remove(i);
+			} else {
+				b.paint(g);
+				i++;
+			}
+		}
+	}
 
 	/**
-     * Add the panel to the frame, and set up additional components, which
-     * here are the BreakoutBall and the BreakoutBricks, also setting up
-     * a repaint thread.
-     * 
-     * @param frame the JFrame to which the panel is added
-     *              be added
-     * @param container the JPanel where graphics will be drawn
-     */
-    protected void buildGUI(JFrame frame, JPanel container) {
+	 * Add the mouse listeners to the panel. Here, we need methods
+	 * from both MouseListener, as the MouseMotionListener will be
+	 * the BreakoutPaddle.
+	 * 
+	 * @param p the JPanel to which the mouse listeners will be
+	 *          attached
+	 */
+	@Override
+	protected void addListeners(JPanel panel) {
 
-        tank1 = new Tank(new Point(100,100),container, 0);
-		tank2 = new Tank(new Point(900,900),container, 1);
+		panel.addKeyListener(this);
+	}
+
+	/**
+	 * Add the panel to the frame, and set up additional components, which
+	 * here are the BreakoutBall and the BreakoutBricks, also setting up
+	 * a repaint thread.
+	 * 
+	 * @param frame     the JFrame to which the panel is added
+	 *                  be added
+	 * @param container the JPanel where graphics will be drawn
+	 */
+	protected void buildGUI(JFrame frame, JPanel container) {
+
+		tank1 = new Tank(new Point(100, 100), container, 0);
+		tank2 = new Tank(new Point(900, 900), container, 1);
 		p1 = new Player(tank1);
 		p2 = new Player(tank2);
 		playerOne = new JLabel("Player 1 Score: " + p1.getScore());
@@ -137,27 +137,25 @@ public class Game extends SpriteController implements KeyListener {
 		container.add(p2HealthBar);
 
 		// initializes the variables
-        for (int i = 0; i < 20; i++) {
-            targets.add(new Target(panel, 1000, 1000));
-        }
+		for (int i = 0; i < 20; i++) {
+			targets.add(new Target(panel, 1000, 1000));
+		}
 
 		frame.addKeyListener(this);
-        frame.add(container);
+		frame.add(container);
 
-        // repaint regularly forever thread
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    Sprite.sleepWithCatch(DELAY_TIME);
-                    container.repaint();
-                }
+		// repaint regularly forever thread
+		new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					Sprite.sleepWithCatch(DELAY_TIME);
+					container.repaint();
+				}
 
-
-
-            }
-        }.start();
-    }
+			}
+		}.start();
+	}
 
 	public void updateScore() {
 		playerOne.setText("Player 1 Score: " + p1.getScore());
@@ -165,6 +163,12 @@ public class Game extends SpriteController implements KeyListener {
 	}
 
 	public void updateHealth() {
+		if(tank1.done()) {
+			p1HealthBar.setVisible(false);
+		}
+		if(tank2.done()) {
+			p2HealthBar.setVisible(false);
+		}
 		p1HealthBar.setText("Health: " + p1.getHealth());
 		p2HealthBar.setText("Health: " + p2.getHealth());
 		p1HealthBar.setLocation(tank1.getX() + 14, tank1.getY() - 35);
@@ -174,16 +178,16 @@ public class Game extends SpriteController implements KeyListener {
 	/**
 	 * Tank movement and firing method
 	 * Player 1 movement:
-	 *  W
-	 * ASD 
+	 * W
+	 * ASD
 	 * Player 1 Fire
 	 * G
 	 * 
 	 * Tank2m movement:
-	 *  ^
+	 * ^
 	 * <V>
-	 *	Tank2 Fire
-	 *	L
+	 * Tank2 Fire
+	 * L
 	 *
 	 * @param e mouse event info
 	 */
@@ -206,27 +210,27 @@ public class Game extends SpriteController implements KeyListener {
 		} else if (e.getKeyCode() == KeyEvent.VK_G) {
 
 			// This sets the correct image for the rotation of the tank
-                if (curr == 0) {
-					Point temp = new Point( currLoc.x + 41 , currLoc.y - 5 );
-                    newBullet = new Bullet(temp, panel, "Up", targets, p1, p2);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                } else if (curr == 1) {
-					Point temp = new Point( currLoc.x + 41 , currLoc.y + 90 );
-                    newBullet = new Bullet(temp, panel, "Down", targets, p1, p2);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                } else if (curr == 2) {
-					Point temp = new Point( currLoc.x - 5 , currLoc.y + 41 );
-                    newBullet = new Bullet(temp, panel, "Left", targets, p1, p2);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                } else if (curr == 3) {
-					Point temp = new Point( currLoc.x + 90 , currLoc.y + 41 );
-                    newBullet = new Bullet(temp, panel, "Right", targets, p1, p2);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                }
+			if (curr == 0) {
+				Point temp = new Point(currLoc.x + 41, currLoc.y - 5);
+				newBullet = new Bullet(temp, panel, "Up", targets, p1, p2);
+				bullets.add(newBullet);
+				newBullet.start();
+			} else if (curr == 1) {
+				Point temp = new Point(currLoc.x + 41, currLoc.y + 90);
+				newBullet = new Bullet(temp, panel, "Down", targets, p1, p2);
+				bullets.add(newBullet);
+				newBullet.start();
+			} else if (curr == 2) {
+				Point temp = new Point(currLoc.x - 5, currLoc.y + 41);
+				newBullet = new Bullet(temp, panel, "Left", targets, p1, p2);
+				bullets.add(newBullet);
+				newBullet.start();
+			} else if (curr == 3) {
+				Point temp = new Point(currLoc.x + 90, currLoc.y + 41);
+				newBullet = new Bullet(temp, panel, "Right", targets, p1, p2);
+				bullets.add(newBullet);
+				newBullet.start();
+			}
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -242,41 +246,42 @@ public class Game extends SpriteController implements KeyListener {
 			tank2.moveRight();
 			curr2 = 3;
 		} else if (e.getKeyCode() == KeyEvent.VK_L) {
-			
+
 			// This sets the correct image for the rotation of the tank
-                if (curr2 == 0) {
-					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y - 5 );
-                    newBullet = new Bullet(temp2, panel, "Up", targets, p2, p1);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                } else if (curr2 == 1) {
-					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y + 90 );
-                    newBullet = new Bullet(temp2, panel, "Down", targets, p2, p1);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                } else if (curr2 == 2) {
-					Point temp2 = new Point( currLoc2.x - 5 , currLoc2.y + 41 );
-                    newBullet = new Bullet(temp2, panel, "Left", targets, p2, p1);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                } else if (curr2 == 3) {
-					Point temp2 = new Point( currLoc2.x + 90 , currLoc2.y + 41 );
-                    newBullet = new Bullet(temp2, panel, "Right", targets, p2, p1);
-                    bullets.add(newBullet);
-                    newBullet.start();
-                }
+			if (curr2 == 0) {
+				Point temp2 = new Point(currLoc2.x + 41, currLoc2.y - 5);
+				newBullet = new Bullet(temp2, panel, "Up", targets, p2, p1);
+				bullets.add(newBullet);
+				newBullet.start();
+			} else if (curr2 == 1) {
+				Point temp2 = new Point(currLoc2.x + 41, currLoc2.y + 90);
+				newBullet = new Bullet(temp2, panel, "Down", targets, p2, p1);
+				bullets.add(newBullet);
+				newBullet.start();
+			} else if (curr2 == 2) {
+				Point temp2 = new Point(currLoc2.x - 5, currLoc2.y + 41);
+				newBullet = new Bullet(temp2, panel, "Left", targets, p2, p1);
+				bullets.add(newBullet);
+				newBullet.start();
+			} else if (curr2 == 3) {
+				Point temp2 = new Point(currLoc2.x + 90, currLoc2.y + 41);
+				newBullet = new Bullet(temp2, panel, "Right", targets, p2, p1);
+				bullets.add(newBullet);
+				newBullet.start();
+			}
 		}
 		container.repaint();
 		// trigger paint so we can see the tank in its new location
 	}
 
-	//unused method to satisfy the interfaces.
+	// unused method to satisfy the interfaces.
 	@Override
 	public void keyReleased(KeyEvent e) {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e){}
+	public void keyTyped(KeyEvent e) {
+	}
 
 	public static void main(String args[]) {
 
