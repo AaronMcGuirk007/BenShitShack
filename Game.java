@@ -270,7 +270,7 @@ public class Game extends SpriteController implements KeyListener {
 				newBullet.start();
 			}
 		}
-		container.repaint();
+		//container.repaint();
 		// trigger paint so we can see the tank in its new location
 	}
 
