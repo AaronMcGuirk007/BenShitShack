@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 public class Tank extends Sprite {
     // Movement speed, delay time between frames of animation, and the size of the
     // tank
-    private static final int MOVE_SPEED = 2;
+    private static final int MOVE_SPEED = 30;
     public static final int DELAY_TIME = 33;
     public static final int SIZE = 20;
 
@@ -27,6 +27,8 @@ public class Tank extends Sprite {
             "gifs/RedTankRight.gif" };
 
     Image image = null;
+    Image explosion = null;
+    Image crater = null;
 
     // latest location of the tank
     private Point centerPoint;
@@ -71,19 +73,26 @@ public class Tank extends Sprite {
         this.container = container;
         this.tankColor = tankColor;
 
-        if(tankColor == 0) {
+        if (tankColor == 0) {
             currP = gTP[0];
             image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
             currP = rTP[0];
             image = Toolkit.getDefaultToolkit().getImage(currP);
         }
+        explosion = Toolkit.getDefaultToolkit().getImage("Explosion.gif");
+        crater = Toolkit.getDefaultToolkit().getImage("Crater.png");
         health = 3;
     }
 
     public void paint(Graphics g) {
 
-        g.drawImage(image, (int) upperLeftX, (int) upperLeftY, null);
+        if (done) {
+            g.drawImage(explosion, (int) upperLeftX, (int) upperLeftY - 15, null);
+            g.drawImage(crater, (int) upperLeftX, (int) upperLeftY - 15, null);
+        } else {
+            g.drawImage(image, (int) upperLeftX, (int) upperLeftY, null);
+        }
 
     }
 
@@ -125,7 +134,7 @@ public class Tank extends Sprite {
     public void moveUp() {
         upperLeftY--;
 
-        if(tankColor == 0) {
+        if (tankColor == 0) {
             currP = gTP[0];
             image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
@@ -139,7 +148,7 @@ public class Tank extends Sprite {
     public void moveRight() {
         upperLeftX++;
 
-        if(tankColor == 0) {
+        if (tankColor == 0) {
             currP = gTP[3];
             image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
@@ -154,7 +163,7 @@ public class Tank extends Sprite {
     public void moveDown() {
         upperLeftY++;
 
-        if(tankColor == 0) {
+        if (tankColor == 0) {
             currP = gTP[1];
             image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
@@ -169,7 +178,7 @@ public class Tank extends Sprite {
     public void moveLeft() {
         upperLeftX--;
 
-        if(tankColor == 0) {
+        if (tankColor == 0) {
             currP = gTP[2];
             image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
@@ -181,10 +190,9 @@ public class Tank extends Sprite {
 
     }
 
-    public void shoot() {
-        // newBullet = new Bullet(currLoc, panel, "Right", targets, p1);
-        // bullets.add(newBullet);
-        // newBullet.start();
+    public void destroyTank() {
+        done = true;
+        container.repaint();
     }
 
     /**

@@ -28,7 +28,7 @@ public class Game extends SpriteController implements KeyListener {
 
 	private Bullet newBullet;
 	private Player p1, p2;
-	private JLabel playerOne, playerTwo;
+	private JLabel playerOne, playerTwo, p1HealthBar, p2HealthBar;
 
 	//The tanks
 	public Tank tank1;
@@ -68,6 +68,7 @@ public class Game extends SpriteController implements KeyListener {
 		
         tank1.paint(g);
 		tank2.paint(g);
+		updateHealth();
         //terrain.paint(g);
 
 		int j = 0;
@@ -124,12 +125,16 @@ public class Game extends SpriteController implements KeyListener {
 
         tank1 = new Tank(new Point(100,100),container, 0);
 		tank2 = new Tank(new Point(900,900),container, 1);
-		p1 = new Player();
-		p2 = new Player();
+		p1 = new Player(tank1);
+		p2 = new Player(tank2);
 		playerOne = new JLabel("Player 1 Score: " + p1.getScore());
 		playerTwo = new JLabel("Player 2 Score: " + p2.getScore());
+		p1HealthBar = new JLabel("Health: " + p1.getHealth());
+		p2HealthBar = new JLabel("Health: " + p2.getHealth());
 		container.add(playerOne);
 		container.add(playerTwo);
+		container.add(p1HealthBar);
+		container.add(p2HealthBar);
 
 		// initializes the variables
         for (int i = 0; i < 20; i++) {
@@ -159,6 +164,13 @@ public class Game extends SpriteController implements KeyListener {
 		playerTwo.setText("Player 2 Score: " + p2.getScore());
 	}
 
+	public void updateHealth() {
+		p1HealthBar.setText("Health: " + p1.getHealth());
+		p2HealthBar.setText("Health: " + p2.getHealth());
+		p1HealthBar.setLocation(tank1.getX() + 14, tank1.getY() - 35);
+		p2HealthBar.setLocation(tank2.getX() + 14, tank2.getY() - 35);
+	}
+
 	/**
 	 * Tank movement and firing method
 	 * Player 1 movement:
@@ -176,6 +188,8 @@ public class Game extends SpriteController implements KeyListener {
 	 * @param e mouse event info
 	 */
 	public void keyPressed(KeyEvent e) {
+		Point currLoc = new Point(tank1.getX(), tank1.getY());
+		Point currLoc2 = new Point(tank2.getX(), tank2.getY());
 
 		if (e.getKeyCode() == KeyEvent.VK_W) {
 			tank1.moveUp();
@@ -190,28 +204,26 @@ public class Game extends SpriteController implements KeyListener {
 			tank1.moveRight();
 			curr = 3;
 		} else if (e.getKeyCode() == KeyEvent.VK_G) {
-			tank1.shoot();
 
 			// This sets the correct image for the rotation of the tank
-			Point currLoc = new Point(tank1.getX(), tank1.getY());
                 if (curr == 0) {
 					Point temp = new Point( currLoc.x + 41 , currLoc.y - 5 );
-                    newBullet = new Bullet(temp, panel, "Up", targets, p1);
+                    newBullet = new Bullet(temp, panel, "Up", targets, p1, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr == 1) {
 					Point temp = new Point( currLoc.x + 41 , currLoc.y + 90 );
-                    newBullet = new Bullet(temp, panel, "Down", targets, p1);
+                    newBullet = new Bullet(temp, panel, "Down", targets, p1, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr == 2) {
 					Point temp = new Point( currLoc.x - 5 , currLoc.y + 41 );
-                    newBullet = new Bullet(temp, panel, "Left", targets, p1);
+                    newBullet = new Bullet(temp, panel, "Left", targets, p1, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr == 3) {
 					Point temp = new Point( currLoc.x + 90 , currLoc.y + 41 );
-                    newBullet = new Bullet(temp, panel, "Right", targets, p1);
+                    newBullet = new Bullet(temp, panel, "Right", targets, p1, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 }
@@ -230,28 +242,26 @@ public class Game extends SpriteController implements KeyListener {
 			tank2.moveRight();
 			curr2 = 3;
 		} else if (e.getKeyCode() == KeyEvent.VK_L) {
-			tank2.shoot();
 			
 			// This sets the correct image for the rotation of the tank
-			Point currLoc2 = new Point(tank2.getX(), tank2.getY());
                 if (curr2 == 0) {
 					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y - 5 );
-                    newBullet = new Bullet(temp2, panel, "Up", targets, p2);
+                    newBullet = new Bullet(temp2, panel, "Up", targets, p2, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr2 == 1) {
 					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y + 90 );
-                    newBullet = new Bullet(temp2, panel, "Down", targets, p2);
+                    newBullet = new Bullet(temp2, panel, "Down", targets, p2, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr2 == 2) {
 					Point temp2 = new Point( currLoc2.x - 5 , currLoc2.y + 41 );
-                    newBullet = new Bullet(temp2, panel, "Left", targets, p2);
+                    newBullet = new Bullet(temp2, panel, "Left", targets, p2, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr2 == 3) {
 					Point temp2 = new Point( currLoc2.x + 90 , currLoc2.y + 41 );
-                    newBullet = new Bullet(temp2, panel, "Right", targets, p2);
+                    newBullet = new Bullet(temp2, panel, "Right", targets, p2, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 }
