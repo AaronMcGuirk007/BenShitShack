@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 public class Tank extends Sprite {
     // Movement speed, delay time between frames of animation, and the size of the
     // tank
-    private static final int MOVE_SPEED = 30;
+    //private static final int MOVE_SPEED = 30;
     public static final int DELAY_TIME = 33;
     public static final int SIZE = 20;
 
@@ -89,7 +89,7 @@ public class Tank extends Sprite {
 
         if (done) {
             g.drawImage(explosion, (int) upperLeftX, (int) upperLeftY - 15, null);
-            g.drawImage(crater, (int) upperLeftX, (int) upperLeftY - 15, null);
+            //g.drawImage(crater, (int) upperLeftX, (int) upperLeftY - 15, null);
         } else {
             g.drawImage(image, (int) upperLeftX, (int) upperLeftY, null);
         }
@@ -132,7 +132,7 @@ public class Tank extends Sprite {
      * @return true if the direction of the key is being pressed
      */
     public void moveUp() {
-        upperLeftY--;
+        upperLeftY -= 5;
 
         if (tankColor == 0) {
             currP = gTP[0];
@@ -146,7 +146,7 @@ public class Tank extends Sprite {
     }
 
     public void moveRight() {
-        upperLeftX++;
+        upperLeftX += 5;
 
         if (tankColor == 0) {
             currP = gTP[3];
@@ -161,7 +161,7 @@ public class Tank extends Sprite {
     }
 
     public void moveDown() {
-        upperLeftY++;
+        upperLeftY += 5;
 
         if (tankColor == 0) {
             currP = gTP[1];
@@ -176,7 +176,7 @@ public class Tank extends Sprite {
     }
 
     public void moveLeft() {
-        upperLeftX--;
+        upperLeftX -= 5;
 
         if (tankColor == 0) {
             currP = gTP[2];
