@@ -27,6 +27,8 @@ public class Game extends SpriteController implements KeyListener {
 	private int curr, curr2;
 
 	private Bullet newBullet;
+	private Player p1, p2;
+	private JLabel playerOne, playerTwo;
 
 	//The tanks
 	public Tank tank1;
@@ -74,7 +76,7 @@ public class Game extends SpriteController implements KeyListener {
             if (t.done()) {
                 t.paint(g);
                 targets.remove(j);
-                //updateScore();
+				updateScore();
             } else {
                 t.paint(g);
                 j++;
@@ -122,6 +124,12 @@ public class Game extends SpriteController implements KeyListener {
 
         tank1 = new Tank(new Point(100,100),container, 0);
 		tank2 = new Tank(new Point(900,900),container, 1);
+		p1 = new Player();
+		p2 = new Player();
+		playerOne = new JLabel("Player 1 Score: " + p1.getScore());
+		playerTwo = new JLabel("Player 2 Score: " + p2.getScore());
+		container.add(playerOne);
+		container.add(playerTwo);
 
 		// initializes the variables
         for (int i = 0; i < 20; i++) {
@@ -146,6 +154,10 @@ public class Game extends SpriteController implements KeyListener {
         }.start();
     }
 
+	public void updateScore() {
+		playerOne.setText("Player 1 Score: " + p1.getScore());
+		playerTwo.setText("Player 2 Score: " + p2.getScore());
+	}
 
 	/**
 	 * Tank movement and firing method
@@ -184,22 +196,22 @@ public class Game extends SpriteController implements KeyListener {
 			Point currLoc = new Point(tank1.getX(), tank1.getY());
                 if (curr == 0) {
 					Point temp = new Point( currLoc.x + 41 , currLoc.y - 5 );
-                    newBullet = new Bullet(temp, panel, "Up", targets);
+                    newBullet = new Bullet(temp, panel, "Up", targets, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr == 1) {
 					Point temp = new Point( currLoc.x + 41 , currLoc.y + 90 );
-                    newBullet = new Bullet(temp, panel, "Down", targets);
+                    newBullet = new Bullet(temp, panel, "Down", targets, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr == 2) {
 					Point temp = new Point( currLoc.x - 5 , currLoc.y + 41 );
-                    newBullet = new Bullet(temp, panel, "Left", targets);
+                    newBullet = new Bullet(temp, panel, "Left", targets, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr == 3) {
 					Point temp = new Point( currLoc.x + 90 , currLoc.y + 41 );
-                    newBullet = new Bullet(temp, panel, "Right", targets);
+                    newBullet = new Bullet(temp, panel, "Right", targets, p1);
                     bullets.add(newBullet);
                     newBullet.start();
                 }
@@ -224,22 +236,22 @@ public class Game extends SpriteController implements KeyListener {
 			Point currLoc2 = new Point(tank2.getX(), tank2.getY());
                 if (curr2 == 0) {
 					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y - 5 );
-                    newBullet = new Bullet(temp2, panel, "Up", targets);
+                    newBullet = new Bullet(temp2, panel, "Up", targets, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr2 == 1) {
 					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y + 90 );
-                    newBullet = new Bullet(temp2, panel, "Down", targets);
+                    newBullet = new Bullet(temp2, panel, "Down", targets, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr2 == 2) {
 					Point temp2 = new Point( currLoc2.x - 5 , currLoc2.y + 41 );
-                    newBullet = new Bullet(temp2, panel, "Left", targets);
+                    newBullet = new Bullet(temp2, panel, "Left", targets, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 } else if (curr2 == 3) {
 					Point temp2 = new Point( currLoc2.x + 90 , currLoc2.y + 41 );
-                    newBullet = new Bullet(temp2, panel, "Right", targets);
+                    newBullet = new Bullet(temp2, panel, "Right", targets, p2);
                     bullets.add(newBullet);
                     newBullet.start();
                 }

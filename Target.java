@@ -18,6 +18,7 @@ public class Target {
     protected int x, y, area;
     protected Point centerPoint;
     protected boolean done;
+    private Player currPlayer;
     protected JComponent container;
     private int health;
 
@@ -43,7 +44,8 @@ public class Target {
         return this.centerPoint;
     }
 
-    public void hitTarget() {
+    public void hitTarget(Player currPlayer) {
+        this.currPlayer = currPlayer;
         if (health > 0) {
             health -= 25;
             container.repaint();
@@ -64,7 +66,7 @@ public class Target {
     public void paint(Graphics g) {
         if (done) {
     
-            // score this thing
+            currPlayer.scorePoint();
 
         } else {
 

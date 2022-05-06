@@ -16,13 +16,13 @@ public class Bullet extends Sprite {
 
     private Point startPoint;
 
-    private Player currPlayer;
-
     private String direction;
 
     private double xSpeed, ySpeed;
 
     private boolean done;
+
+    private Player currPlayer;
 
     private ArrayList<Collisions> cpArr = new ArrayList<>();
 
@@ -36,12 +36,13 @@ public class Bullet extends Sprite {
      * @param startPoint the point where the Bubble will be placed.
      * @param panel      the panel which the Bubble is placed on.
      */
-    public Bullet(Point startPoint, JComponent panel, String direction, ArrayList<Target> targets) {
+    public Bullet(Point startPoint, JComponent panel, String direction, ArrayList<Target> targets, Player currPlayer) {
         super(panel);
         this.startPoint = startPoint;
         this.panel = panel;
         this.direction = direction;
         this.targets = targets;
+        this.currPlayer = currPlayer;
 
         // Bullet speeds used for translation
         ySpeed = 0;
@@ -96,7 +97,7 @@ public class Bullet extends Sprite {
             // This checks for bullet collisions with objects
             if(!cpArr.isEmpty()){
                 for(int i = 0; i < cpArr.size(); i++){
-                    if(cpArr.get(i).checkCollisions()){
+                    if(cpArr.get(i).checkCollisions(currPlayer)){
                         done = true;
                         break;
                     }else{
