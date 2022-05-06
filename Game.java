@@ -28,7 +28,7 @@ public class Game extends SpriteController implements KeyListener {
 	//Terrain
 
 	//The targets
-	private Target target1;
+	//private Target target1;
 
 
     //the container of the game
@@ -87,8 +87,8 @@ public class Game extends SpriteController implements KeyListener {
      */
     protected void buildGUI(JFrame frame, JPanel container) {
 
-        tank1 = new Tank(new Point(100,100),container);
-		tank2 = new Tank(new Point(100,100),container);
+        tank1 = new Tank(new Point(100,100),container, 0);
+		tank2 = new Tank(new Point(900,900),container, 1);
 		frame.addKeyListener(this);
         frame.add(container);
 
