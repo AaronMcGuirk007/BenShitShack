@@ -39,6 +39,9 @@ public class Tank extends Sprite {
     // Tank Color (0 = Green , 1 = Red)
     private int tankColor;
 
+    // Current Tank Pic
+    private String currP;
+
     // has the tanks health reached zero?
     private boolean done;
     // Booleans for when the tank is moving in a certain direction(Up, Down, Left,
@@ -69,9 +72,11 @@ public class Tank extends Sprite {
         this.tankColor = tankColor;
 
         if(tankColor == 0) {
-            image = Toolkit.getDefaultToolkit().getImage(gTP[0]);
+            currP = gTP[0];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
-            image = Toolkit.getDefaultToolkit().getImage(rTP[0]);
+            currP = rTP[0];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         }
         health = 3;
     }
@@ -155,7 +160,9 @@ public class Tank extends Sprite {
     }
 
     public void shoot() {
-        // Bullet newBullet = new Bullet(x, y, container)
+        newBullet = new Bullet(currLoc, panel, "Right", targets, p1);
+        bullets.add(newBullet);
+        newBullet.start();
     }
 
     /**

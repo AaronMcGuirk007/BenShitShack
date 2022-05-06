@@ -89,6 +89,7 @@ public class Game extends SpriteController implements KeyListener {
 
         tank1 = new Tank(new Point(100,100),container, 0);
 		tank2 = new Tank(new Point(900,900),container, 1);
+
 		frame.addKeyListener(this);
         frame.add(container);
 
