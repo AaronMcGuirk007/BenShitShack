@@ -118,9 +118,11 @@ public class Tank extends Sprite {
         upperLeftY--;
 
         if(tankColor == 0) {
-            image = Toolkit.getDefaultToolkit().getImage(gTP[0]);
+            currP = gTP[0];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
-            image = Toolkit.getDefaultToolkit().getImage(rTP[0]);
+            currP = rTP[0];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         }
 
         container.repaint();
@@ -128,41 +130,53 @@ public class Tank extends Sprite {
 
     public void moveRight() {
         upperLeftX++;
+
         if(tankColor == 0) {
-            image = Toolkit.getDefaultToolkit().getImage(gTP[3]);
+            currP = gTP[3];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
-            image = Toolkit.getDefaultToolkit().getImage(rTP[3]);
+            currP = rTP[3];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         }
+
         container.repaint();
 
     }
 
     public void moveDown() {
         upperLeftY++;
+
         if(tankColor == 0) {
-            image = Toolkit.getDefaultToolkit().getImage(gTP[1]);
+            currP = gTP[1];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
-            image = Toolkit.getDefaultToolkit().getImage(rTP[1]);
+            currP = rTP[1];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         }
+
         container.repaint();
 
     }
 
     public void moveLeft() {
         upperLeftX--;
+
         if(tankColor == 0) {
-            image = Toolkit.getDefaultToolkit().getImage(gTP[2]);
+            currP = gTP[2];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         } else {
-            image = Toolkit.getDefaultToolkit().getImage(rTP[2]);
+            currP = rTP[2];
+            image = Toolkit.getDefaultToolkit().getImage(currP);
         }
+
         container.repaint();
 
     }
 
     public void shoot() {
-        newBullet = new Bullet(currLoc, panel, "Right", targets, p1);
-        bullets.add(newBullet);
-        newBullet.start();
+        // newBullet = new Bullet(currLoc, panel, "Right", targets, p1);
+        // bullets.add(newBullet);
+        // newBullet.start();
     }
 
     /**
