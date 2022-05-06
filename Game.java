@@ -21,6 +21,13 @@ public class Game extends SpriteController implements KeyListener {
 
 	private java.util.List<Tank> tanks;
 
+	private ArrayList<Bullet> bullets = new ArrayList<>();
+    private ArrayList<Target> targets = new ArrayList<>();
+
+	private int curr, curr2;
+
+	private Bullet newBullet;
+
 	//The tanks
 	public Tank tank1;
 	public Tank tank2;
@@ -29,7 +36,6 @@ public class Game extends SpriteController implements KeyListener {
 
 	//The targets
 	//private Target target1;
-
 
     //the container of the game
 	public JPanel container;
@@ -45,6 +51,7 @@ public class Game extends SpriteController implements KeyListener {
 	public Game(){
 
 		super("Tanks", 1000, 1000);
+		
 	}
 	/*
 
@@ -60,6 +67,32 @@ public class Game extends SpriteController implements KeyListener {
         tank1.paint(g);
 		tank2.paint(g);
         //terrain.paint(g);
+
+		int j = 0;
+        while (j < targets.size()) {
+            Target t = targets.get(j);
+            if (t.done()) {
+                t.paint(g);
+                targets.remove(j);
+                //updateScore();
+            } else {
+                t.paint(g);
+                j++;
+            }
+        }
+
+        // Paints and removes the bullets
+        int i = 0;
+        while (i < bullets.size()) {
+            Bullet b = bullets.get(i);
+            if (b.done()) {
+                b.stop();
+                bullets.remove(i);
+            } else {
+                b.paint(g);
+                i++;
+            }
+        }
     }
 
 	/**
@@ -90,6 +123,11 @@ public class Game extends SpriteController implements KeyListener {
         tank1 = new Tank(new Point(100,100),container, 0);
 		tank2 = new Tank(new Point(900,900),container, 1);
 
+		// initializes the variables
+        for (int i = 0; i < 20; i++) {
+            targets.add(new Target(panel, 1000, 1000));
+        }
+
 		frame.addKeyListener(this);
         frame.add(container);
 
@@ -101,6 +139,8 @@ public class Game extends SpriteController implements KeyListener {
                     Sprite.sleepWithCatch(DELAY_TIME);
                     container.repaint();
                 }
+
+
 
             }
         }.start();
@@ -127,27 +167,82 @@ public class Game extends SpriteController implements KeyListener {
 
 		if (e.getKeyCode() == KeyEvent.VK_W) {
 			tank1.moveUp();
+			curr = 0;
 		} else if (e.getKeyCode() == KeyEvent.VK_S) {
 			tank1.moveDown();
+			curr = 1;
 		} else if (e.getKeyCode() == KeyEvent.VK_A) {
 			tank1.moveLeft();
+			curr = 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_D) {
 			tank1.moveRight();
+			curr = 3;
 		} else if (e.getKeyCode() == KeyEvent.VK_G) {
 			tank1.shoot();
+
+			// This sets the correct image for the rotation of the tank
+			Point currLoc = new Point(tank1.getX(), tank1.getY());
+                if (curr == 0) {
+					Point temp = new Point( currLoc.x + 41 , currLoc.y - 5 );
+                    newBullet = new Bullet(temp, panel, "Up", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                } else if (curr == 1) {
+					Point temp = new Point( currLoc.x + 41 , currLoc.y + 90 );
+                    newBullet = new Bullet(temp, panel, "Down", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                } else if (curr == 2) {
+					Point temp = new Point( currLoc.x - 5 , currLoc.y + 41 );
+                    newBullet = new Bullet(temp, panel, "Left", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                } else if (curr == 3) {
+					Point temp = new Point( currLoc.x + 90 , currLoc.y + 41 );
+                    newBullet = new Bullet(temp, panel, "Right", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                }
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			tank2.moveUp();
+			curr2 = 0;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			tank2.moveDown();
+			curr2 = 1;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			tank2.moveLeft();
+			curr2 = 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			tank2.moveRight();
+			curr2 = 3;
 		} else if (e.getKeyCode() == KeyEvent.VK_L) {
 			tank2.shoot();
 			
+			// This sets the correct image for the rotation of the tank
+			Point currLoc2 = new Point(tank2.getX(), tank2.getY());
+                if (curr2 == 0) {
+					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y - 5 );
+                    newBullet = new Bullet(temp2, panel, "Up", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                } else if (curr2 == 1) {
+					Point temp2 = new Point( currLoc2.x + 41 , currLoc2.y + 90 );
+                    newBullet = new Bullet(temp2, panel, "Down", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                } else if (curr2 == 2) {
+					Point temp2 = new Point( currLoc2.x - 5 , currLoc2.y + 41 );
+                    newBullet = new Bullet(temp2, panel, "Left", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                } else if (curr2 == 3) {
+					Point temp2 = new Point( currLoc2.x + 90 , currLoc2.y + 41 );
+                    newBullet = new Bullet(temp2, panel, "Right", targets);
+                    bullets.add(newBullet);
+                    newBullet.start();
+                }
 		}
 		container.repaint();
 		// trigger paint so we can see the tank in its new location

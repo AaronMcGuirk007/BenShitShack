@@ -87,6 +87,14 @@ public class Tank extends Sprite {
 
     }
 
+    public int getX() {
+        return (int) upperLeftX;
+    }
+
+    public int getY() {
+        return (int) upperLeftY;
+    }
+
     public void run() {
     }
 
