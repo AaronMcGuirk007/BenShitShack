@@ -71,6 +71,18 @@ public class PvP extends SpriteController implements KeyListener {
 		updateHealth();
 		// terrain.paint(g);
 
+		int j = 0;
+		while (j < targets.size()) {
+			Target t = targets.get(j);
+			if (t.done()) {
+				t.paint(g);
+				targets.remove(j);
+				updateScore();
+			} else {
+				t.paint(g);
+				j++;
+			}
+		}
 
 
 		// Paints and removes the bullets
@@ -125,10 +137,10 @@ public class PvP extends SpriteController implements KeyListener {
 		container.add(p1HealthBar);
 		container.add(p2HealthBar);
 
-		// initializes the variables
-		// for (int i = 0; i < 20; i++) {
-		// 	targets.add(new Target(panel, 1000, 1000));
-		// }
+		//initializes the variables
+		for (int i = 0; i < 1; i++) {
+			targets.add(new Target(container, 700, 700));
+		}
 
 		frame.addKeyListener(this);
 		frame.add(container);

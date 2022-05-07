@@ -72,7 +72,7 @@ public class Game extends SpriteController implements KeyListener {
 		g.drawImage(img, 0, 0, null);
 		
 		tank1.paint(g);
-		tank2.paint(g);
+		//tank2.paint(g);
 		updateHealth();
 		// terrain.paint(g);
 
@@ -136,17 +136,17 @@ public class Game extends SpriteController implements KeyListener {
 	protected void buildGUI(JFrame frame, JPanel container) {
 
 		tank1 = new Tank(new Point(100, 100), container, 0);
-		//tank2 = new Tank(new Point(900, 900), container, 1);
+		tank2 = new Tank(new Point(900, 900), container, 1);
 		p1 = new Player(tank1);
 		p2 = new Player(tank2);
 		playerOne = new JLabel("Player 1 Score: " + p1.getScore());
-		playerTwo = new JLabel("Player 2 Score: " + p2.getScore());
+		//playerTwo = new JLabel("Player 2 Score: " + p2.getScore());
 		p1HealthBar = new JLabel("Health: " + p1.getHealth());
-		p2HealthBar = new JLabel("Health: " + p2.getHealth());
+		//p2HealthBar = new JLabel("Health: " + p2.getHealth());
 		container.add(playerOne);
-		container.add(playerTwo);
+		//container.add(playerTwo);
 		container.add(p1HealthBar);
-		container.add(p2HealthBar);
+		//container.add(p2HealthBar);
 
 		// initializes the variables
 		for (int i = 0; i < 20; i++) {
@@ -171,7 +171,7 @@ public class Game extends SpriteController implements KeyListener {
 
 	public void updateScore() {
 		playerOne.setText("Player 1 Score: " + p1.getScore());
-		playerTwo.setText("Player 2 Score: " + p2.getScore());
+		//playerTwo.setText("Player 2 Score: " + p2.getScore());
 	}
 
 	public void updateHealth() {
@@ -182,9 +182,9 @@ public class Game extends SpriteController implements KeyListener {
 			p2HealthBar.setVisible(false);
 		}
 		p1HealthBar.setText("Health: " + p1.getHealth());
-		p2HealthBar.setText("Health: " + p2.getHealth());
+		//p2HealthBar.setText("Health: " + p2.getHealth());
 		p1HealthBar.setLocation(tank1.getX() + 14, tank1.getY() - 35);
-		p2HealthBar.setLocation(tank2.getX() + 14, tank2.getY() - 35);
+		//p2HealthBar.setLocation(tank2.getX() + 14, tank2.getY() - 35);
 	}
 
 	/**
