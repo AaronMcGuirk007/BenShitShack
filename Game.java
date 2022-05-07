@@ -158,7 +158,11 @@ public class Game extends SpriteController implements KeyListener {
 	}
 
 	public void updateScore() {
-		playerOne.setText("Player 1 Score: " + p1.getScore());
+		if(p1.getScore() == 20) {
+			playerOne.setText("Game Over!");
+		} else {
+			playerOne.setText("Player 1 Score: " + p1.getScore());
+		}
 		//playerTwo.setText("Player 2 Score: " + p2.getScore());
 	}
 
