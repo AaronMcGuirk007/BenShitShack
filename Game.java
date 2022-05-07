@@ -31,6 +31,9 @@ public class Game extends SpriteController implements KeyListener {
 	private Player p1, p2;
 	private JLabel playerOne, playerTwo, p1HealthBar, p2HealthBar;
 
+	//background
+	private Image img = Toolkit.getDefaultToolkit().getImage("Battlefield.png");
+
 	// The tanks
 	public Tank tank1;
 	public Tank tank2;
@@ -65,6 +68,8 @@ public class Game extends SpriteController implements KeyListener {
 	 */
 	@Override
 	protected void paint(Graphics g) {
+
+		g.drawImage(img, 0, 0, null);
 		
 		tank1.paint(g);
 		//tank2.paint(g);
@@ -97,6 +102,13 @@ public class Game extends SpriteController implements KeyListener {
 			}
 		}
 	}
+
+	// container.setBackground(new Background(
+    //             new BackgroundImage(
+    //                     new Image("https://edencoding.com/wp-content/uploads/2021/03/layer_06_1920x1080.png"),
+    //                     BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+    //                     new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
+    //                     new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true))));
 
 	/**
 	 * Add the mouse listeners to the panel. Here, we need methods
