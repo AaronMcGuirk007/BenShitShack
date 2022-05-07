@@ -134,7 +134,7 @@ public class Tank extends Sprite {
      * @return true if the direction of the key is being pressed
      */
     public void moveUp() {
-        upperLeftY -= 5;
+        upperLeftY -= 10;
 
         if (tankColor == 0) {
             currP = gTP[0];
@@ -148,7 +148,7 @@ public class Tank extends Sprite {
     }
 
     public void moveRight() {
-        upperLeftX += 5;
+        upperLeftX += 10;
 
         if (tankColor == 0) {
             currP = gTP[3];
@@ -163,7 +163,7 @@ public class Tank extends Sprite {
     }
 
     public void moveDown() {
-        upperLeftY += 5;
+        upperLeftY += 10;
 
         if (tankColor == 0) {
             currP = gTP[1];
@@ -178,7 +178,7 @@ public class Tank extends Sprite {
     }
 
     public void moveLeft() {
-        upperLeftX -= 5;
+        upperLeftX -= 10;
 
         if (tankColor == 0) {
             currP = gTP[2];

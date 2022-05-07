@@ -12,7 +12,7 @@ import java.awt.Graphics;
  * @version Spring 2022
  */
 
-public class Game extends SpriteController implements KeyListener {
+public class PvP extends SpriteController implements KeyListener {
 
 	// Delay for the animations
 	public static final int DELAY_TIME = 33;
@@ -49,9 +49,9 @@ public class Game extends SpriteController implements KeyListener {
 	// an object to serve as the lock for thread safety of our list access
 	private Object lock = new Object();
 
-	public Game() {
+	public PvP() {
 
-		super("Tanks", 1000, 1000);
+		super("Tanks", 700, 700);
 
 	}
 
@@ -71,18 +71,7 @@ public class Game extends SpriteController implements KeyListener {
 		updateHealth();
 		// terrain.paint(g);
 
-		int j = 0;
-		while (j < targets.size()) {
-			Target t = targets.get(j);
-			if (t.done()) {
-				t.paint(g);
-				targets.remove(j);
-				updateScore();
-			} else {
-				t.paint(g);
-				j++;
-			}
-		}
+
 
 		// Paints and removes the bullets
 		int i = 0;
@@ -124,7 +113,7 @@ public class Game extends SpriteController implements KeyListener {
 	protected void buildGUI(JFrame frame, JPanel container) {
 
 		tank1 = new Tank(new Point(100, 100), container, 0);
-		//tank2 = new Tank(new Point(900, 900), container, 1);
+		tank2 = new Tank(new Point(600, 600), container, 1);
 		p1 = new Player(tank1);
 		p2 = new Player(tank2);
 		playerOne = new JLabel("Player 1 Score: " + p1.getScore());
@@ -137,9 +126,9 @@ public class Game extends SpriteController implements KeyListener {
 		container.add(p2HealthBar);
 
 		// initializes the variables
-		for (int i = 0; i < 20; i++) {
-			targets.add(new Target(panel, 1000, 1000));
-		}
+		// for (int i = 0; i < 20; i++) {
+		// 	targets.add(new Target(panel, 1000, 1000));
+		// }
 
 		frame.addKeyListener(this);
 		frame.add(container);
