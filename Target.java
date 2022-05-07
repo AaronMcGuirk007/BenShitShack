@@ -17,7 +17,7 @@ public class Target {
     protected final int radius = 25;
     protected int x, y, area;
     protected Point centerPoint;
-    protected boolean done;
+    protected boolean done, pvpClass;
     private Player currPlayer;
     protected JComponent container;
     private int health;
@@ -25,15 +25,27 @@ public class Target {
     public Target(JComponent container, int width, int height) {
         // 1000 x 1000 gameboard size
         Random rand = new Random();
-
-        this.x = rand.nextInt(width + 1);
-        this.y = rand.nextInt(height + 1);
-        this.area = (radius * 2) * (radius * 2);
-        this.container = container;
-        this.centerPoint = new Point(x, y);
-        health = 100;
-        done = false;
-        container.repaint();
+        if (width == 700 && height == 700) {
+            this.x = rand.nextInt(width + 1);
+            this.y = rand.nextInt(height + 1);
+            this.area = (radius * 2) * (radius * 2);
+            this.container = container;
+            this.centerPoint = new Point(x, y);
+            health = 100;
+            done = false;
+            pvpClass = true;
+            container.repaint();
+        } else {
+            // 1000 x 1000 gameboard size
+            this.x = rand.nextInt(width + 1);
+            this.y = rand.nextInt(height + 1);
+            this.area = (radius * 2) * (radius * 2);
+            this.container = container;
+            this.centerPoint = new Point(x, y);
+            health = 100;
+            done = false;
+            container.repaint();
+        }
     }
 
     public int getArea() {
@@ -65,10 +77,10 @@ public class Target {
 
     public void paint(Graphics g) {
         if (done) {
-    
+
             currPlayer.scorePoint();
 
-        } else {
+        } else if (!pvpClass) {
 
             if (health == 100) {
                 g.setColor(new Color(176, 255, 115));
